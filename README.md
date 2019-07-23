@@ -4,13 +4,24 @@ The templating engine tailored for boilerplates
 
 # Design philosophy
 
-Kettle aims to bring the power of templating without breaking any syntax.
+As templating engines were historically tailored for the needs of server side rendering they allow for powerful integration of conditions, loops, replacements, includes, ... but don't care about breaking syntax.
+
+The consequence is that when using those engines for boilerplate templating it breaks the code and prevents you from using tools such as linting, typings and unit tests live while templating. Thus, making the development cycle of a boilerplate tedious.
+
+Kettle aims to bring the power of templating without breaking any syntax by focusing only on basic tools and leveraging comments available in (almost) any programing language.
 
 # Usage
 
+## Install Kettle
+
+```
+yarn add @bam.tech/kettle
+npm install @bam.tech/kettle
+```
+
 ## Running Kettle
 
-It recommended to use Kettle using Gulp
+It is recommended to use Kettle using Gulp
 
 ```javascript
 const { src, dest } = require('gulp');
@@ -30,7 +41,7 @@ src(['path/to/template'])
 
 ## Using Kettle templates in paths
 
-Kettle will also replace values in paths:
+Kettle replaces values in paths:
 
 - Input: `path/to/__replace__appName__/file.env` will output `path/to/myApp/file.env`
 
@@ -48,7 +59,7 @@ For example, `path/to/__replace__appName__/subFolder__if__!isFalse__/file.env` w
 
 ## Using Kettle templates in files
 
-In files content, by default, Kettle will turn this:
+In files content, Kettle will turn this:
 
 ```javascript
 const import1 = require('path/to/imports1__if__isFalse__/import1.js');
@@ -80,6 +91,7 @@ console.log('myApp');
 
 - `//`
 - `#`
+- _Please open an issue if you find a comment syntax which doesn't work with Kettle_
 
 ## Syntax highlighting
 
