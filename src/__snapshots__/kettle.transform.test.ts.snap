@@ -1,0 +1,43 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`kettleTransformFactory works against a template: /myApp.js 1`] = `
+"const test = require('./shouldExist/shouldExist.js');
+"
+`;
+
+exports[`kettleTransformFactory works against a template: /package.json 1`] = `
+"{
+  \\"name\\": \\"myApp\\"
+}
+"
+`;
+
+exports[`kettleTransformFactory works against a template: /shouldExist/shouldExist.js 1`] = `
+"module.exports = () => {};
+"
+`;
+
+exports[`kettleTransformFactory works against a template: /src/myUtils/index.js 1`] = `
+"import hello from 'world';
+
+function myUtils(random) {
+  setupProd(random);
+  return hello();
+}
+"
+`;
+
+exports[`kettleTransformFactory works against a template: /src/myUtilsmyApp.js 1`] = `""`;
+
+exports[`kettleTransformFactory works against a template: File architecture 1`] = `
+Object {
+  "/myApp.js": "file",
+  "/package.json": "file",
+  "/shouldExist": "folder",
+  "/shouldExist/shouldExist.js": "file",
+  "/src": "folder",
+  "/src/myUtils": "folder",
+  "/src/myUtils/index.js": "file",
+  "/src/myUtilsmyApp.js": "file",
+}
+`;
