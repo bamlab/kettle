@@ -24,8 +24,8 @@ describe('replaceValues', () => {
           plop: 'world',
         },
         {
-          namePrefix: '_rp_',
-          nameSuffix: '_',
+          replacePrefix: '_rp_',
+          replaceSuffix: '_',
         }
       )
     ).toEqual('Hello world');
@@ -91,6 +91,22 @@ describe('replaceIfBlocks', () => {
 
     expect(replaceIfBlocks(input, { isWorld: true })).toEqual(output);
   });
+
+  it('allows custom matching patterns', () => {
+    const input = `
+    // IIisWorldII
+      helloworld()
+    // EI
+    `;
+
+    const output = `
+      helloworld()
+    `;
+
+    expect(
+      replaceIfBlocks(input, { isWorld: true }, { ifPrefix: 'II', ifSuffix: 'II', endif: 'EI' })
+    ).toEqual(output);
+  });
 });
 
 describe('replaceIfLines', () => {
@@ -113,11 +129,26 @@ describe('replaceIfLines', () => {
       import test2 from '/myApp/plop/truthy__if__isFalse__/test2.js';
     `;
 
-    const ouput = `
+    const output = `
       import test1 from '/myApp/truthy/test1.js';
     `;
 
-    expect(replaceIfLines(input, { isTrue: true, isFalse: false })).toEqual(ouput);
+    expect(replaceIfLines(input, { isTrue: true, isFalse: false })).toEqual(output);
+  });
+  it('allows custom matching patterns', () => {
+    const input = `
+      import test1 from '/myApp/truthyIIisTrueII/test1.js';
+      import test2 from '/myApp/plop/truthyIIisTrueII/test2.js';
+    `;
+
+    const output = `
+      import test1 from '/myApp/truthy/test1.js';
+      import test2 from '/myApp/plop/truthy/test2.js';
+    `;
+
+    expect(replaceIfLines(input, { isTrue: true }, { ifPrefix: 'II', ifSuffix: 'II' })).toEqual(
+      output
+    );
   });
 });
 
@@ -149,5 +180,11 @@ describe('stringToInclude', () => {
         value2: false,
       })
     ).toEqual(null);
+  });
+
+  it('allows custom matching patterns', () => {
+    expect(
+      stringToInclude('helloWorldIIvalue1II', { value1: true }, { ifPrefix: 'II', ifSuffix: 'II' })
+    ).toEqual('helloWorld');
   });
 });

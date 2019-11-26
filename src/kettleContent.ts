@@ -10,9 +10,9 @@ export function kettleContent(
   let output = input;
 
   // Replace IFs
-  output = replaceIfBlocks(output, values);
+  output = replaceIfBlocks(output, values, partialOptions);
 
-  output = replaceIfLines(output, values);
+  output = replaceIfLines(output, values, partialOptions);
 
   // Replace values
   output = replaceValues(output, values, partialOptions);

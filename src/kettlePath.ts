@@ -10,7 +10,7 @@ export function kettlePath(
   let output = inputPath;
 
   // Check includes
-  output = stringToInclude(output, values);
+  output = stringToInclude(output, values, partialOptions);
   if (!output) return null;
 
   // Replace values
