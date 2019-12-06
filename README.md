@@ -30,10 +30,12 @@ const { transformFactory } = require('kettle');
 src(['path/to/template'])
   .pipe(
     transformFactory({
-      isTrue: true,
-      isFalse: false,
-      appName: 'myApp',
-      functionName: 'myFunction',
+      values: {
+        isTrue: true,
+        isFalse: false,
+        appName: 'myApp',
+        functionName: 'myFunction',
+      }
     })
   )
   .pipe(dest('path/to/output'));
@@ -92,6 +94,30 @@ console.log('myApp');
 - `//`
 - `#`
 - _Please open an issue if you find a comment syntax which doesn't work with Kettle_
+
+## Search and replace
+
+Sometimes it is impossible to use characters such as *"_"* in strings. To allow for some edge cases, a search and replace tool has been included. __It is recommended to avoid using this method__.
+
+```javascript
+transformFactory({
+  replaceList: [{
+    from: 'foo',
+    to: 'hello'
+  }, {
+    from: 'Bar',
+    to: 'World'
+  }]
+})
+```
+
+This will transform all occurences of `foo` and `Bar`. `fooBar` will becom `helloWorld`
+
+## Custom replacement blocks
+
+It is possible to customize the `__replace__<myVar>__`, `__if__<myVar>__` and `__endif__` blocks.
+
+Examples are provided in [kettle.replace.test.ts](./src/kettle.replace.test.ts)
 
 ## Syntax highlighting
 
