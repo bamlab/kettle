@@ -6,8 +6,10 @@ describe('kettle file templating', () => {
     const filePath = resolve('./testFiles/templateFile.input.js');
     const expectedOutput = await readFileString('./testFiles/templateFile.output.js');
     const output = await kettleFile(filePath, {
-      fName: 'helloWorld',
-      isWorld: true,
+      values: {
+        fName: 'helloWorld',
+        isWorld: true,
+      },
     });
     expect(output).toEqual(expectedOutput);
   });
@@ -15,8 +17,10 @@ describe('kettle file templating', () => {
     const filePath = resolve('./testFiles/templateFile.input.php');
     const expectedOutput = await readFileString('./testFiles/templateFile.output.php');
     const output = await kettleFile(filePath, {
-      fName: 'helloWorld',
-      isWorld: true,
+      values: {
+        fName: 'helloWorld',
+        isWorld: true,
+      },
     });
     expect(output).toEqual(expectedOutput);
   });
@@ -24,8 +28,10 @@ describe('kettle file templating', () => {
     const filePath = resolve('./testFiles/templateFile.input.env');
     const expectedOutput = await readFileString('./testFiles/templateFile.output.env');
     const output = await kettleFile(filePath, {
-      projectName: 'myProject',
-      isDebug: true,
+      values: {
+        projectName: 'myProject',
+        isDebug: true,
+      },
     });
     expect(output).toEqual(expectedOutput);
   });

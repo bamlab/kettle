@@ -32,12 +32,14 @@ describe('kettleTransformFactory', () => {
     src([`${inputPath}/**/*`])
       .pipe(
         kettleTransformFactory({
-          isDebug: false,
-          isProd: true,
-          isTrue: true,
-          isFalse: false,
-          utilsName: 'myUtils',
-          appName: 'myApp',
+          values: {
+            isDebug: false,
+            isProd: true,
+            isTrue: true,
+            isFalse: false,
+            utilsName: 'myUtils',
+            appName: 'myApp',
+          },
         })
       )
       .pipe(contentCollector);

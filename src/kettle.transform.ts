@@ -10,7 +10,7 @@ const PLUGIN_NAME = 'gulp-kettle';
 /**
  * Outputs a node Transform object usable in Gulp
  */
-export const kettleTransformFactory = (values: KettleValues, options?: PartialKettleOptions) => {
+export const kettleTransformFactory = (options?: PartialKettleOptions) => {
   /**
    * Do not use arrow function with through
    * as through defines this as Transform
@@ -21,7 +21,7 @@ export const kettleTransformFactory = (values: KettleValues, options?: PartialKe
     encoding: string,
     callback: (error: Error | null, chunk?: Vinyl) => void
   ) {
-    const path = kettlePath(chunk.path, values, options);
+    const path = kettlePath(chunk.path, options);
 
     if (!path) return callback(null);
 
@@ -43,7 +43,7 @@ export const kettleTransformFactory = (values: KettleValues, options?: PartialKe
         cwd: chunk.cwd,
         base: chunk.base,
         path,
-        contents: Buffer.from(kettleContent(chunk.contents.toString(), values, options)),
+        contents: Buffer.from(kettleContent(chunk.contents.toString(), options)),
       });
       return callback(null, output);
     }

@@ -12,9 +12,8 @@ export async function readFileString(path: string): Promise<string> {
 
 export async function kettleFile(
   filePath: string,
-  values: KettleValues = {},
   partialOptions: PartialKettleOptions = {}
 ): Promise<string> {
   const fileContent = await readFileString(filePath);
-  return kettleContent(fileContent, values, partialOptions);
+  return kettleContent(fileContent, partialOptions);
 }

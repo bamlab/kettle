@@ -1,6 +1,8 @@
 import { KettleOptions, KettleValues, PartialKettleOptions } from './kettle.types';
 
 const defaultOptions: KettleOptions = {
+  replaceList: [],
+  values: {},
   replacePrefix: '__replace__',
   replaceSuffix: '__',
   ifPrefix: '__if__',

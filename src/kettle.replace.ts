@@ -6,11 +6,7 @@ import { getStringValue, getOptions } from './utils';
  * - Start with `__if__myValue__` or `__if__!myValue__`
  * - End with `__endif`
  */
-export function replaceIfBlocks(
-  input: string,
-  values: KettleValues,
-  partialOptions: PartialKettleOptions = {}
-) {
+export function replaceIfBlocks(input: string, partialOptions: PartialKettleOptions = {}) {
   const options = getOptions(partialOptions);
   const ifStartLineRegex = `[\\t ]*?(?:\\/\\/|#) ${options.ifPrefix}([^_]+)${options.ifSuffix}[\\n\\r]`;
   const ifContentLinesRegex = '([^]*?)';
@@ -18,8 +14,8 @@ export function replaceIfBlocks(
   const ifRegex = new RegExp(`${ifStartLineRegex}${ifContentLinesRegex}${ifEndLineRegex}`, 'gm');
   return input.replace(ifRegex, (_match, ifValueKey, content) => {
     if (
-      (!ifValueKey.startsWith('!') && !!values[ifValueKey]) ||
-      (ifValueKey.startsWith('!') && !values[ifValueKey.substr(1)])
+      (!ifValueKey.startsWith('!') && !!options.values[ifValueKey]) ||
+      (ifValueKey.startsWith('!') && !options.values[ifValueKey.substr(1)])
     )
       return content;
     return '';
@@ -30,15 +26,11 @@ export function replaceIfBlocks(
  * Replace a line containing `__if__myValue__` or `__if__!myValue__`
  * If the value is false, the line
  */
-export function replaceIfLines(
-  input: string,
-  values: KettleValues,
-  partialOptions: PartialKettleOptions = {}
-) {
+export function replaceIfLines(input: string, partialOptions: PartialKettleOptions = {}) {
   const options = getOptions(partialOptions);
   const ifPathRegex = new RegExp(`(.*?${options.ifPrefix}!?\\w+?${options.ifSuffix}.*?)\\n`, 'g');
   return input.replace(ifPathRegex, (match: string, substring: string): string => {
-    const replacement = stringToInclude(substring, values, partialOptions);
+    const replacement = stringToInclude(substring, partialOptions);
     return !!replacement ? `${replacement}\n` : '';
   });
 }
@@ -46,16 +38,19 @@ export function replaceIfLines(
 /**
  * Replaces `__replace__myValue__` with the value
  */
-export function replaceValues(
-  input: string,
-  values: KettleValues = {},
-  partialOptions: PartialKettleOptions = {}
-) {
+export function replaceValues(input: string, partialOptions: PartialKettleOptions = {}) {
   const options = getOptions(partialOptions);
+
   const nameRegexp = new RegExp(`${options.replacePrefix}(\\w+?)${options.replaceSuffix}`, 'g');
-  return input.replace(nameRegexp, (_match, valueKey) => {
-    return getStringValue(values, valueKey);
+  let output = input.replace(nameRegexp, (_match, valueKey) => {
+    return getStringValue(options.values, valueKey);
   });
+
+  for (let replaceItem of options.replaceList) {
+    output = output.replace(new RegExp(replaceItem.from, 'g'), replaceItem.to);
+  }
+
+  return output;
 }
 
 /**
@@ -65,7 +60,6 @@ export function replaceValues(
  */
 export function stringToInclude(
   input: string,
-  values: KettleValues,
   partialOptions: PartialKettleOptions = {}
 ): string | null {
   const options = getOptions(partialOptions);
@@ -77,10 +71,10 @@ export function stringToInclude(
   const [matchChars, prefix, valueKey, suffix] = match;
 
   if (
-    (!valueKey.startsWith('!') && !values[valueKey]) ||
-    (valueKey.startsWith('!') && values[valueKey.substr(1)])
+    (!valueKey.startsWith('!') && !options.values[valueKey]) ||
+    (valueKey.startsWith('!') && options.values[valueKey.substr(1)])
   )
     return null;
 
-  return stringToInclude(`${prefix}${suffix}`, values, partialOptions);
+  return stringToInclude(`${prefix}${suffix}`, partialOptions);
 }
