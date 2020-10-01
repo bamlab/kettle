@@ -1,6 +1,5 @@
-import { getStringValue, getOptions } from './utils';
-import { KettleValues, PartialKettleOptions } from './kettle.types';
-import { replaceIfBlocks, replaceValues, replaceIfLines } from './kettle.replace';
+import { replaceIfBlocks, replaceIfLines, replaceValues } from './kettle.replace';
+import { PartialKettleOptions } from './kettle.types';
 
 export function kettleContent(input: string, partialOptions?: PartialKettleOptions): string {
   let output = input;

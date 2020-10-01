@@ -1,6 +1,5 @@
-import { KettleOptions, KettleValues, PartialKettleOptions } from './kettle.types';
-import { getOptions } from './utils';
 import { replaceValues, stringToInclude } from './kettle.replace';
+import { PartialKettleOptions } from './kettle.types';
 
 export function kettlePath(
   inputPath: string,

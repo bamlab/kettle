@@ -1,7 +1,7 @@
 import { readFile } from 'fs';
 import { promisify } from 'util';
+import { PartialKettleOptions } from './kettle.types';
 import { kettleContent } from './kettleContent';
-import { KettleValues, PartialKettleOptions } from './kettle.types';
 
 const promisifiedReadFile = promisify(readFile);
 

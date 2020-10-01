@@ -1,5 +1,5 @@
-import { KettleValues, KettleOptions, PartialKettleOptions } from './kettle.types';
-import { getStringValue, getOptions } from './utils';
+import { PartialKettleOptions } from './kettle.types';
+import { getOptions, getStringValue } from './utils';
 
 /**
  * Replace a if block with its content

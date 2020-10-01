@@ -1,9 +1,9 @@
-import * as through from 'through2';
-import { Transform } from 'stream';
 import * as PluginError from 'plugin-error';
+import { Transform } from 'stream';
+import * as through from 'through2';
 import * as Vinyl from 'vinyl';
+import { PartialKettleOptions } from './kettle.types';
 import { kettleContent } from './kettleContent';
-import { KettleValues, PartialKettleOptions } from './kettle.types';
 import { kettlePath } from './kettlePath';
 
 const PLUGIN_NAME = 'gulp-kettle';
@@ -15,7 +15,7 @@ export const kettleTransformFactory = (options?: PartialKettleOptions) => {
    * Do not use arrow function with through
    * as through defines this as Transform
    */
-  return through.obj(function(
+  return through.obj(function (
     this: Transform,
     chunk: Vinyl,
     encoding: string,
