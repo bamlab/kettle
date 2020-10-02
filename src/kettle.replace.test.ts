@@ -1,4 +1,10 @@
-import { replaceValues, replaceIfBlocks, stringToInclude, replaceIfLines } from './kettle.replace';
+import {
+  replaceValues,
+  replaceIfBlocks,
+  stringToInclude,
+  replaceIfLines,
+  contentToInclude,
+} from './kettle.replace';
 
 describe('replaceValues', () => {
   it('replaces a value', () => {
@@ -57,7 +63,10 @@ describe('replaceList', () => {
   it('replaces multiple values', () => {
     expect(
       replaceValues('plipPlop', {
-        replaceList: [{ from: 'plip', to: 'hello' }, { from: 'Plop', to: 'World' }],
+        replaceList: [
+          { from: 'plip', to: 'hello' },
+          { from: 'Plop', to: 'World' },
+        ],
       })
     ).toEqual('helloWorld');
   });
@@ -235,5 +244,31 @@ describe('stringToInclude', () => {
         ifSuffix: 'II',
       })
     ).toEqual('helloWorld');
+  });
+});
+
+describe('contentToInclude', () => {
+  it('returns null if the include condition is false', () => {
+    const input = `
+    // __include_if__isFalse__
+    line 1
+    `;
+
+    const output: null = null;
+
+    expect(contentToInclude(input, { values: { isFalse: false } })).toEqual(output);
+  });
+
+  it('returns the content without the first line if the include condition is true', () => {
+    const input = `
+    // __include_if__isTrue__
+    line 1
+    `;
+
+    const output = `
+    line 1
+    `;
+
+    expect(contentToInclude(input, { values: { isTrue: true } })).toEqual(output);
   });
 });

@@ -7,16 +7,19 @@ describe('kettleContent', () => {
   });
   it('calls the methods in order', () => {
     // @ts-ignore
-    replace.replaceIfBlocks = jest.fn(() => 'output1');
+    replace.contentToInclude = jest.fn(() => 'output1');
     // @ts-ignore
-    replace.replaceIfLines = jest.fn(() => 'output2');
+    replace.replaceIfBlocks = jest.fn(() => 'output2');
     // @ts-ignore
-    replace.replaceValues = jest.fn(() => 'output3');
+    replace.replaceIfLines = jest.fn(() => 'output3');
+    // @ts-ignore
+    replace.replaceValues = jest.fn(() => 'output4');
 
     const result = kettleContent('input');
-    expect(replace.replaceIfBlocks).toHaveBeenCalledWith('input', undefined);
-    expect(replace.replaceIfLines).toHaveBeenCalledWith('output1', undefined);
-    expect(replace.replaceValues).toHaveBeenCalledWith('output2', undefined);
-    expect(result).toEqual('output3');
+    expect(replace.contentToInclude).toHaveBeenCalledWith('input', undefined);
+    expect(replace.replaceIfBlocks).toHaveBeenCalledWith('output1', undefined);
+    expect(replace.replaceIfLines).toHaveBeenCalledWith('output2', undefined);
+    expect(replace.replaceValues).toHaveBeenCalledWith('output3', undefined);
+    expect(result).toEqual('output4');
   });
 });

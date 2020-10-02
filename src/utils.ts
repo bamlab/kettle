@@ -6,6 +6,7 @@ const defaultOptions: KettleOptions = {
   replacePrefix: '__replace__',
   replaceSuffix: '__',
   ifPrefix: '__if__',
+  includeIfPrefix: '__include_if__',
   ifSuffix: '__',
   endif: '__endif__',
 };

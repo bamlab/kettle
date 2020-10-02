@@ -35,7 +35,7 @@ src(['path/to/template'])
         isFalse: false,
         appName: 'myApp',
         functionName: 'myFunction',
-      }
+      },
     })
   )
   .pipe(dest('path/to/output'));
@@ -47,11 +47,14 @@ Kettle replaces values in paths:
 
 - Input: `path/to/__replace__appName__/file.env` will output `path/to/myApp/file.env`
 
-To add a folder/file conditionnaly:
+## To add a folder/file conditionnaly:
 
 - With `path/to/__replace__appName____if__isTrue__/subFolder__if__isTrue__/file.env`, the resulting file will appear in the written file at the path `path/to/myApp/subFolder/file.env`
 
 - With `path/to/__replace__appName__/subFolder__if__isFalse__/file.env`, Kettle will not write any file
+
+- With a `// __include_if_isTrue_` comment the file will be included and the comment removed
+- With a `// __include_if_isFalse_` the file will not be included in the output at all
 
 ## Reverse assertions
 
@@ -97,21 +100,24 @@ console.log('myApp');
 
 ## Search and replace
 
-Sometimes it is impossible to use characters such as *"_"* in strings. To allow for some edge cases, a search and replace tool has been included. __It is recommended to avoid using this method__.
+Sometimes it is impossible to use characters such as _"\_"_ in strings. To allow for some edge cases, a search and replace tool has been included. **It is recommended to avoid using this method**.
 
 ```javascript
 transformFactory({
-  replaceList: [{
-    from: 'foo',
-    to: 'hello'
-  }, {
-    from: 'Bar',
-    to: 'World'
-  }]
-})
+  replaceList: [
+    {
+      from: 'foo',
+      to: 'hello',
+    },
+    {
+      from: 'Bar',
+      to: 'World',
+    },
+  ],
+});
 ```
 
-This will transform all occurences of `foo` and `Bar`. `fooBar` will becom `helloWorld`
+This will transform all occurences of `foo` and `Bar`. `fooBar` will become `helloWorld`
 
 ## Custom replacement blocks
 

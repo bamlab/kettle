@@ -6,6 +6,17 @@
   "configurations": [
     {
       "type": "node",
+      "name": "vscode-jest-tests",
+      "request": "launch",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest",
+      "args": ["--runInBand", "-t", "kettleTransformFactory"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "disableOptimisticBPs": true
+    },
+    {
+      "type": "node",
       "request": "launch",
       "name": "Launch Program",
       "runtimeArgs": ["-r", "ts-node/register"],

@@ -39,11 +39,15 @@ export const kettleTransformFactory = (options?: PartialKettleOptions) => {
     }
 
     if (chunk.isBuffer()) {
+      const content = kettleContent(chunk.contents.toString(), options);
+
+      if (content === null) return callback(null);
+
       const output = new Vinyl({
         cwd: chunk.cwd,
         base: chunk.base,
         path,
-        contents: Buffer.from(kettleContent(chunk.contents.toString(), options)),
+        contents: Buffer.from(content),
       });
       return callback(null, output);
     }

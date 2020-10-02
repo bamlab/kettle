@@ -12,6 +12,12 @@ exports[`kettleTransformFactory works against a template: /package.json 1`] = `
 "
 `;
 
+exports[`kettleTransformFactory works against a template: /shouldExist/shouldBeIncluded.js 1`] = `
+"
+const shouldBeIncluded = true;
+"
+`;
+
 exports[`kettleTransformFactory works against a template: /shouldExist/shouldExist.js 1`] = `
 "module.exports = () => {};
 "
@@ -34,6 +40,7 @@ Object {
   "/myApp.js": "file",
   "/package.json": "file",
   "/shouldExist": "folder",
+  "/shouldExist/shouldBeIncluded.js": "file",
   "/shouldExist/shouldExist.js": "file",
   "/src": "folder",
   "/src/myUtils": "folder",

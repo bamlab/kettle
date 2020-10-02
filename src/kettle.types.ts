@@ -14,6 +14,7 @@ export interface KettleOptions {
   replacePrefix: string;
   replaceSuffix: string;
   ifPrefix: string;
+  includeIfPrefix: string;
   ifSuffix: string;
   endif: string;
 }

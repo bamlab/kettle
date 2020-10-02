@@ -1,4 +1,5 @@
 {
   "editor.formatOnSave": true,
-  "jest.autoEnable": true
+  "jest.autoEnable": true,
+  "jest.pathToJest": "node_modules/.bin/jest"
 }
