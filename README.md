@@ -53,8 +53,18 @@ Kettle replaces values in paths:
 
 - With `path/to/__replace__appName__/subFolder__if__isFalse__/file.env`, Kettle will not write any file
 
-- With a `// __include_if_isTrue_` comment the file will be included and the comment removed
-- With a `// __include_if_isFalse_` the file will not be included in the output at all
+- With a `// __include_if_isTrue_` comment, the file will be included and the comment line removed
+
+- With a `// __include_if_isFalse_` comment, the file will not be included in the output at all
+
+- You can also chain conditions with multiple include lines. The position of the comment in the file does not matter
+
+```javascript
+// __include_if_isTrue_
+// __include_if_isFalse_
+
+const thisFileWillNotBeRendered = true;
+```
 
 ## Reverse assertions
 

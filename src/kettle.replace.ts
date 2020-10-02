@@ -28,7 +28,7 @@ export function contentToInclude(
   )
     return null;
 
-  return input.replace(matchChars, '');
+  return contentToInclude(input.replace(matchChars, ''));
 }
 
 /**

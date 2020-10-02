@@ -259,6 +259,18 @@ describe('contentToInclude', () => {
     expect(contentToInclude(input, { values: { isFalse: false } })).toEqual(output);
   });
 
+  it('returns null if one of the include condition is false', () => {
+    const input = `
+    // __include_if__is__
+    // __include_if__isFalse__
+    line 1
+    `;
+
+    const output: null = null;
+
+    expect(contentToInclude(input, { values: { isFalse: false } })).toEqual(output);
+  });
+
   it('returns the content without the first line if the include condition is true', () => {
     const input = `
     // __include_if__isTrue__
